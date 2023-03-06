@@ -155,7 +155,7 @@ const teamPortal = () => {
                 type: "list",
                 name: "teamMember",
                 message: "Which Team member would you like to add?",
-                choice: [
+                choices: [
                     "Engineer",
                     "Intern",
                     "My Team is complete"
