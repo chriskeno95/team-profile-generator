@@ -60,7 +60,7 @@ const teamPortal = () => {
             {
                 type: "input",
                 name: "managerOfficeNumber",
-                message: "Who is the manager's office number?",
+                message: "What is the manager's office number?",
                 validate: answer => {
                     if(!isNaN(answer)){
                         return true
