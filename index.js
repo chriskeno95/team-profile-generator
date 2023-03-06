@@ -18,6 +18,16 @@ const teamMembers = [] // creates an empty array to store the team members and t
 
 const teamPortal = () => {
 
+    function buildTeam(){
+        //if the file name output doesnt exist then it will create a file called output that will have a html file called team.html
+        if(!fs.existsSync(OUTPUT_DIR)){
+            fs.mkdirSync(OUTPUT_DIR)
+        }//this makes node use the command line to create and render these files
+        fs.writeFileSync(outputPath, render(teamMembers), 'utf-8');
+    }
+
+
+
     function addIntern(){
         inquirer.prompt([
             {
@@ -37,7 +47,10 @@ const teamPortal = () => {
                 name: "internId",
                 message: "What is the intern's ID number",
                 validate: answer => {
-                    if(!isNaN(answer)){
+                    if(ids.includes(answer)){
+                        console.log("This ID already exists, please check your Interns details")
+                    }
+                     else if(!isNaN(answer)){
                         return true
                     }
                     return "Please enter a Valid ID number"
@@ -71,9 +84,9 @@ const teamPortal = () => {
 
             },
         ]).then(answers => {
-            const intern = new Intern(answers.internName, answers.internID, answers.internEmail, answers.internSchool);
+            const intern = new Intern(answers.internName, answers.internId, answers.internEmail, answers.internSchool);
             teamMembers.push(intern);
-            ids.push(intern);
+            ids.push(answers.internId);
             console.log("You have added an Intern to your Team!")
             createTeam();
         })
@@ -89,7 +102,7 @@ const teamPortal = () => {
             {
                 type: "input",
                 name: "engineerName",
-                message: "Who is the enginner for this team?",
+                message: "Who is the engineer for this team?",
                 validate: answer => {
                     if(answer !== ""){
                         return true
@@ -100,10 +113,13 @@ const teamPortal = () => {
             },
             {
                 type: "input",
-                name: "enginnerId",
+                name: "engineerId",
                 message: "What is the engineer's ID number",
                 validate: answer => {
-                    if(!isNaN(answer)){
+                    if(ids.includes(answer)){
+                        console.log("This ID already exists, please check your engineers details")
+                    }
+                     else if(!isNaN(answer)){
                         return true
                     }
                     return "Please enter a Valid ID number"
@@ -126,7 +142,7 @@ const teamPortal = () => {
             },
             {
                 type: "input",
-                name: "engineerGithub",
+                name: "github",
                 message: "What is the engineer's github account username?",
                 validate: answer => {
                     if(answer !== ""){
@@ -137,9 +153,9 @@ const teamPortal = () => {
 
             },
         ]).then(answers => {
-            const engineer = new Engineer(answers.engineerName, answers.engineerID, answers.engineerEmail, answers.engineerGithub);
+            const engineer = new Engineer(answers.engineerName, answers.engineerId, answers.engineerEmail, answers.github);
             teamMembers.push(engineer);
-            ids.push(engineer);
+            ids.push(answers.engineerId);
             console.log("You have added an Engineer to your Team!")
             createTeam();
         })
@@ -202,12 +218,15 @@ const teamPortal = () => {
                 name: "managerId",
                 message: "What is the Manager's ID number",
                 validate: answer => {
-                    if(!isNaN(answer)){
+                    if(ids.includes(answer)){
+                        console.log("This ID already exists, please check your Interns details")
+                    }
+                     else if(!isNaN(answer)){
                         return true
                     }
                     return "Please enter a Valid ID number"
                     
-                }
+                },
 
             },
             {
@@ -237,9 +256,9 @@ const teamPortal = () => {
 
             },
         ]).then(answers => {
-            const manager = new Manager(answers.managerName, answers.managerID, answers.managerEmail, answers.managerOfficeNumber);
+            const manager = new Manager(answers.managerName, answers.managerId, answers.managerEmail, answers.managerOfficeNumber);
             teamMembers.push(manager);
-            ids.push(answers.managerID)
+            ids.push(answers.managerId)
             console.log("you have added a manager to the team! now lets create the rest of the team!")
             createTeam();
         })
@@ -250,3 +269,5 @@ const teamPortal = () => {
 }
 
 teamPortal();
+//console.log(ids)
+//console.log(teamMembers)
