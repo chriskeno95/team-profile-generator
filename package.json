@@ -1,0 +1,26 @@
+{
+  "name": "clear",
+  "version": "1.0.0",
+  "description": "This repo contains all the relevant files for my team profile generator",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chriskeno95/team-profile-generator.git"
+  },
+  "author": "Chris Kennedy",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/chriskeno95/team-profile-generator/issues"
+  },
+  "homepage": "https://github.com/chriskeno95/team-profile-generator#readme",
+  "dependencies": {
+    "inquirer": "^8.2.2",
+    "jest": "^29.4.3"
+  }
+}
