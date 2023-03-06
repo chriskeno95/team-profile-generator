@@ -13,6 +13,11 @@ I then used Jest to see if my code passed all the provided tests.
 - [Screenshots](#screenshots)
 - [License](#license)
 
+## Installation
+
+No need to install anything to view this project; you can view it [here](https://chriskeno95.github.io/team-profile-generator/).
+This is a copy of the generated team.html file.
+
 ## Screenshots
 
 ![screenshot](./assets/images/screenshot-1.png)
