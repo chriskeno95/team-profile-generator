@@ -9,6 +9,7 @@ const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./src/page-template.js");
+const { addListener } = require("process");
 
 
 // TODO: Write Code to gather information about the development team members, and render the HTML file.
@@ -16,6 +17,171 @@ const ids = [] // create an empty array that the IDs will be added to, this allo
 const teamMembers = [] // creates an empty array to store the team members and their roles.
 
 const teamPortal = () => {
+
+    function addIntern(){
+        inquirer.prompt([
+            {
+                type: "input",
+                name: "internName",
+                message: "Who is the intern for this team?",
+                validate: answer => {
+                    if(answer !== ""){
+                        return true
+                    }
+                    return "Please enter a Name"
+                }
+
+            },
+            {
+                type: "input",
+                name: "internId",
+                message: "What is the intern's ID number",
+                validate: answer => {
+                    if(!isNaN(answer)){
+                        return true
+                    }
+                    return "Please enter a Valid ID number"
+                    
+                }
+
+            },
+            {
+                type: "input",
+                name: "internEmail",
+                message: "what is the interns's Email address",
+                validate: answer => {
+                    if(answer.includes('@')){
+                        return true
+                    }
+                    return "Please enter a Valid Email address"
+                    
+                }
+
+            },
+            {
+                type: "input",
+                name: "internSchool",
+                message: "What is the intern's school called?",
+                validate: answer => {
+                    if(answer !== ""){
+                        return true
+                    }
+                    return "Please enter a Github account username"
+                }
+
+            },
+        ]).then(answers => {
+            const intern = new Intern(answers.internName, answers.internID, answers.internEmail, answers.internSchool);
+            teamMembers.push(intern);
+            ids.push(intern);
+            console.log("You have added an Intern to your Team!")
+            createTeam();
+        })
+    }
+
+
+
+
+
+
+    function addEngineer(){
+        inquirer.prompt([
+            {
+                type: "input",
+                name: "engineerName",
+                message: "Who is the enginner for this team?",
+                validate: answer => {
+                    if(answer !== ""){
+                        return true
+                    }
+                    return "Please enter a Name"
+                }
+
+            },
+            {
+                type: "input",
+                name: "enginnerId",
+                message: "What is the engineer's ID number",
+                validate: answer => {
+                    if(!isNaN(answer)){
+                        return true
+                    }
+                    return "Please enter a Valid ID number"
+                    
+                }
+
+            },
+            {
+                type: "input",
+                name: "engineerEmail",
+                message: "what is the engineer's Email address",
+                validate: answer => {
+                    if(answer.includes('@')){
+                        return true
+                    }
+                    return "Please enter a Valid Email address"
+                    
+                }
+
+            },
+            {
+                type: "input",
+                name: "engineerGithub",
+                message: "What is the engineer's github account username?",
+                validate: answer => {
+                    if(answer !== ""){
+                        return true
+                    }
+                    return "Please enter a Github account username"
+                }
+
+            },
+        ]).then(answers => {
+            const engineer = new Engineer(answers.engineerName, answers.engineerID, answers.engineerEmail, answers.engineerGithub);
+            teamMembers.push(engineer);
+            ids.push(engineer);
+            console.log("You have added an Engineer to your Team!")
+            createTeam();
+        })
+    }
+
+
+
+
+
+    function createTeam(){
+        inquirer.prompt([
+            {
+                type: "list",
+                name: "teamMember",
+                message: "Which Team member would you like to add?",
+                choice: [
+                    "Engineer",
+                    "Intern",
+                    "My Team is complete"
+                ]
+
+
+            },
+        ]).then(userChoice => {
+            if(userChoice.teamMember === "Engineer"){
+                //add engineer
+                addEngineer();
+            } else if (userChoice.teamMember === "Intern"){
+                //add intern
+                addIntern()
+            }else {
+                buildTeam()
+            }
+    })
+}
+
+
+
+
+
+
+
     function createManager(){
         console.log("Assemble your team");
         inquirer.prompt([
@@ -74,7 +240,8 @@ const teamPortal = () => {
             const manager = new Manager(answers.managerName, answers.managerID, answers.managerEmail, answers.managerOfficeNumber);
             teamMembers.push(manager);
             ids.push(answers.managerID)
-            console.log("you have added a manager to the team!")
+            console.log("you have added a manager to the team! now lets create the rest of the team!")
+            createTeam();
         })
     }
 
